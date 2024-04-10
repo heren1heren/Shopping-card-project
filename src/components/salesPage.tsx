@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import styled from 'styled-components';
 
 const SalesPage = styled.div`
@@ -6,5 +7,11 @@ const SalesPage = styled.div`
 `;
 type SalesComponentProps = {};
 export const SalesComponent: FC<SalesComponentProps> = () => {
+  /**
+   * what to do?
+   *  creating a card div that display cat image , cat  name, price
+   *  a card need to con
+   *
+   */
   return <SalesPage> I am a sales page</SalesPage>;
 };

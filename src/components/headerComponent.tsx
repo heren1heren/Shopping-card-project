@@ -32,10 +32,7 @@ const DisplayAffectionDiv = styled.div``;
 type HeaderComponentProps = {
   affection: number;
 };
-export const HeaderComponent: FC<HeaderComponentProps> = ({
-  affection,
-  setAffection,
-}) => {
+export const HeaderComponent: FC<HeaderComponentProps> = ({ affection }) => {
   return (
     <Section>
       {' '}
