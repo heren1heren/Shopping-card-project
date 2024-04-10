@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { FC } from 'react';
 const Section = styled.div`
   background-color: #3f7689;
   flex-basis: 50px;
@@ -28,15 +29,20 @@ const CatImg = styled.img`
 `;
 const DisplayAffectionDiv = styled.div``;
 
-type HeaderComponentProps = {};
-export const HeaderComponent: FC<HeaderComponentProps> = ({}) => {
+type HeaderComponentProps = {
+  affection: number;
+};
+export const HeaderComponent: FC<HeaderComponentProps> = ({
+  affection,
+  setAffection,
+}) => {
   return (
     <Section>
       {' '}
       <Title>
         <CatImg src="src/img/icons8-cat-64(1).png" alt="cat-image" /> CatKingDom
       </Title>
-      <DisplayAffectionDiv> Affection : ∞</DisplayAffectionDiv>
+      <DisplayAffectionDiv> Affection : {`${affection}`}</DisplayAffectionDiv>
       <LinkWrapper>
         <Link to="/homePage">Home Page</Link>
         <Link to="/shop">Shop</Link>

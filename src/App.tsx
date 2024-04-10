@@ -14,12 +14,14 @@ const Body = styled.div`
   text-align: center;
 `;
 export const App: FC<AppProps> = () => {
+  const [affection, setAffection] = useState(0);
+
   return (
     <Body>
-      <HeaderComponent className="header" />
+      <HeaderComponent className="header" affection={affection} />
       {/** how to render default main section */}
 
-      <Outlet />
+      <Outlet context={[affection, setAffection]} />
       <FooterComponent className="footer" />
     </Body>
   );

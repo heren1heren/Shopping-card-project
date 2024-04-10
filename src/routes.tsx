@@ -1,5 +1,5 @@
 import CartComponent from './components/cartComponent';
-import HomePageComponent, { homePageComponent } from './components/homePage';
+import HomePageComponent from './components/homePage';
 import { SalesComponent } from './components/salesPage';
 import { ErrorPageComponent } from './components/errorPageComponent';
 import { element } from 'prop-types';
