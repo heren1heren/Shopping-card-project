@@ -1,22 +1,31 @@
-import App, { Profile, ErrorPage, HomePage } from './router-template';
-
+import CartComponent from './components/cartComponent';
+import HomePageComponent, { homePageComponent } from './components/homePage';
+import { SalesComponent } from './components/salesPage';
+import { ErrorPageComponent } from './components/errorPageComponent';
+import { element } from 'prop-types';
+import { App } from './App';
 const routes = [
   {
     path: '/',
     element: <App />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: 'profile/:name',
-    element: <Profile />,
-  },
-  {
-    path: 'profile/',
-    element: <Profile />,
-  },
-  {
-    path: 'homePage', // new element
-    element: <HomePage />,
+    errorElement: <ErrorPageComponent />,
+
+    children: [
+      { index: true, element: <HomePageComponent /> },
+      {
+        path: 'homePage',
+        element: <HomePageComponent />,
+      },
+      {
+        path: 'shop',
+        element: <SalesComponent />,
+      },
+      {
+        path: 'cart',
+        element: <CartComponent />,
+      },
+    ],
   },
 ];
+
 export default routes;
