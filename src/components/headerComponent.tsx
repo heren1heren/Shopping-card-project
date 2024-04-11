@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FC } from 'react';
-const Section = styled.div`
-  background-color: #3f7689;
+import { FC, useState } from 'react';
+// how to pass background-color valuable inside styled-component
+const Section = styled.div<{ $backgroundColor?: string }>`
+  background-color: ${(props: any) => props.$backgroundColor || 'white'};
   flex-basis: 50px;
   display: flex;
   justify-content: space-between;
@@ -23,23 +24,46 @@ const Img = styled.img`
   vertical-align: middle;
 `;
 const CatImg = styled.img`
-  height: 100%;
+  min-height: 100%;
   width: 40px;
   vertical-align: middle;
 `;
-const DisplayAffectionDiv = styled.div``;
+
+const DisplayAffectionDiv = styled.div<{ $color?: string }>`
+  color: ${(props: any) => props.color || 'black'};
+
+  //! making affection text change color everytime we click button
+`;
 
 type HeaderComponentProps = {
   affection: number;
+  affectionColor: string;
+  headerBackgroundColor: string;
 };
-export const HeaderComponent: FC<HeaderComponentProps> = ({ affection }) => {
+export const HeaderComponent: FC<HeaderComponentProps> = ({
+  affection,
+  affectionColor,
+  headerBackgroundColor,
+}) => {
   return (
-    <Section>
+    <Section
+      $backgroundColor={headerBackgroundColor}
+      style={{ backgroundColor: headerBackgroundColor }}
+    >
       {' '}
       <Title>
         <CatImg src="src/img/icons8-cat-64(1).png" alt="cat-image" /> CatKingDom
       </Title>
-      <DisplayAffectionDiv> Affection : {`${affection}`}</DisplayAffectionDiv>
+      {/**
+       *
+       */}
+      <DisplayAffectionDiv
+        $color={affectionColor}
+        style={{ color: affectionColor }}
+      >
+        {' '}
+        Affection : {`${affection}`}
+      </DisplayAffectionDiv>
       <LinkWrapper>
         <Link to="/homePage">Home Page</Link>
         <Link to="/shop">Shop</Link>

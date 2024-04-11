@@ -15,13 +15,27 @@ const Body = styled.div`
 `;
 export const App: FC<AppProps> = () => {
   const [affection, setAffection] = useState(0);
-
+  const [affectionColor, setAffectionColor] = useState('black');
+  const [headerBackgroundColor, setHeaderBackgroundColor] = useState('white');
   return (
     <Body>
-      <HeaderComponent className="header" affection={affection} />
+      <HeaderComponent
+        className="header"
+        affection={affection}
+        affectionColor={affectionColor}
+        headerBackgroundColor={headerBackgroundColor}
+      />
       {/** how to render default main section */}
 
-      <Outlet context={[affection, setAffection]} />
+      <Outlet
+        context={[
+          affection,
+          setAffection,
+          affectionColor,
+          setAffectionColor,
+          setHeaderBackgroundColor,
+        ]}
+      />
       <FooterComponent className="footer" />
     </Body>
   );
