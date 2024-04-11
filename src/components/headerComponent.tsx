@@ -31,19 +31,19 @@ const CatImg = styled.img`
 
 const DisplayAffectionDiv = styled.div<{ $color?: string }>`
   color: ${(props: any) => props.color || 'black'};
-
-  //! making affection text change color everytime we click button
 `;
 
 type HeaderComponentProps = {
   affection: number;
   affectionColor: string;
   headerBackgroundColor: string;
+  itemCount: number;
 };
 export const HeaderComponent: FC<HeaderComponentProps> = ({
   affection,
   affectionColor,
   headerBackgroundColor,
+  itemCount,
 }) => {
   return (
     <Section
@@ -70,7 +70,8 @@ export const HeaderComponent: FC<HeaderComponentProps> = ({
         <Link to="/cart">
           {' '}
           <Img src="src/img/icons8-cart-50.png" alt="shoppingCartIcon" />
-          Cart
+          Cart:
+          {itemCount}
         </Link>
       </LinkWrapper>
     </Section>

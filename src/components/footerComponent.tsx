@@ -12,7 +12,8 @@ export const FooterComponent: FC<FooterComponentProps> = ({}) => {
   return (
     <Div>
       {' '}
-      Made by <A href="https://github.com/heren1heren">cookieTurtle</A>
+      Made by <A href="https://github.com/heren1heren">cookieTurtle </A>
+      for cats. All copyCats reserved
     </Div>
   );
 };

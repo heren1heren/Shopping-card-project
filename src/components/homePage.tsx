@@ -1,3 +1,4 @@
+import { randomBytes } from 'crypto';
 import { object } from 'prop-types';
 import { useEffect, useState, FC, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
@@ -27,48 +28,22 @@ const IncreaseButton = styled.button`
 
 type homePageProps = {};
 export const HomePageComponent: FC<homePageProps> = ({}) => {
-  {
-    /** what can we have here
-     */
-  }
-  const [isLoading, setIsLoading] = useState(true);
-  const isFetchedRef = useRef(false);
+  // the context cannot recognize set function ask google later.
   const [
+    catsData,
+    setCatsData,
+    isLoading,
+    setIsLoading,
     affection,
     setAffection,
     affectionColor,
     setAffectionColor,
     setHeaderBackgroundColor,
   ] = useOutletContext();
+  console.log(isLoading);
+  console.log(catsData);
+  // ! lifting fetched data up
 
-  const [data, setData] = useState([]);
-
-  console.log(isFetchedRef); // isFetchedRef lose reference after switching between routes
-  useEffect(() => {
-    if (!isFetchedRef.current) {
-      // everytime I comeback from another route the useEffect is triggered. I only want it to fetch once time only after open the page
-      const fetching = async () => {
-        let data = [];
-        try {
-          data = await (
-            await fetch(
-              'https://api.thecatapi.com/v1/images/search?limit=30&api_key=live_Sqy2WNs6swgxN1TR8BRVaTyPEayotuDkcvriOh1ar1L0fKS0T59uV0ksx6nlUMW1'
-            )
-          ).json();
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setIsLoading(false);
-          const filterData = data.map((item: object) => {
-            return item.url;
-          });
-          setData(filterData);
-        }
-      };
-      isFetchedRef.current = true;
-      fetching();
-    }
-  }, []);
   const [imgUrl, setImgUrl] = useState('src/img/tenor.gif');
 
   const handleClick = () => {
@@ -79,7 +54,7 @@ export const HomePageComponent: FC<homePageProps> = ({}) => {
     if (affection === -1) {
       setImgUrl('src/img/cat-stop.gif');
     } else {
-      setImgUrl(data[Math.round(Math.random() * 30)]);
+      setImgUrl(catsData[Math.round(Math.random() * 29)].url);
     }
 
     // setHeaderBackgroundColor(`#${invertHex(color)}`);
