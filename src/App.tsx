@@ -22,14 +22,22 @@ export const App: FC<AppProps> = () => {
   // passing itemCount to homepageComponent
   // passing setItemCount to outlet
   const [catsData, setCatsData] = useState([]);
+  const [purchaseData, setPurchaseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [itemCount, setItemCount] = useState(0); // should be calculated from cardData
   const isFetchedRef = useRef(false);
   const [affection, setAffection] = useState(0);
   const [affectionColor, setAffectionColor] = useState('black');
   const [headerBackgroundColor, setHeaderBackgroundColor] = useState('white'); // delete this latter
   const [cartData, setCartData] = useState([]);
   // isFetchedRef lose reference after switching between routes
+  const itemCount = purchaseData.reduce(
+    (accumulator: number, current: object) => {
+      const value = 1; // depend on type of current data
+      return accumulator + value;
+    },
+    0
+  );
+
   useEffect(() => {
     if (!isFetchedRef.current) {
       // everytime I comeback from another route the useEffect is triggered. I only want it to fetch once time only after open the page
@@ -49,8 +57,8 @@ export const App: FC<AppProps> = () => {
             // add count and prize:
             return {
               url: item.url,
-              count: 0,
-              prize: getRandomPrize(),
+              count: 1,
+              price: getRandomPrize(),
               name: item.breeds[0].name,
             };
           });
@@ -80,6 +88,8 @@ export const App: FC<AppProps> = () => {
       ) : (
         <Outlet
           context={[
+            purchaseData,
+            setPurchaseData,
             catsData,
             setCatsData,
             isLoading,

@@ -30,6 +30,8 @@ type homePageProps = {};
 export const HomePageComponent: FC<homePageProps> = ({}) => {
   // the context cannot recognize set function ask google later.
   const [
+    purchaseData,
+    setPurchaseData,
     catsData,
     setCatsData,
     isLoading,
@@ -40,6 +42,10 @@ export const HomePageComponent: FC<homePageProps> = ({}) => {
     setAffectionColor,
     setHeaderBackgroundColor,
   ] = useOutletContext();
+  const count = purchaseData.reduce((accumulator: number, current: object) => {
+    const value = 1; // depend on type of current data
+    return accumulator + value;
+  }, 0);
 
   const [imgUrl, setImgUrl] = useState('src/img/tenor.gif');
 
