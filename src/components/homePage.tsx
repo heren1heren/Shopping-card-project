@@ -42,7 +42,9 @@ export const HomePageComponent: FC<homePageProps> = ({}) => {
     setHeaderBackgroundColor,
   ] = useOutletContext();
 
-  const [imgUrl, setImgUrl] = useState('src/img/tenor.gif');
+  const [imgUrl, setImgUrl] = useState(
+    'https://media.tenor.com/5BYK-WS0__gAAAAM/cool-fun.gif'
+  );
 
   const handleClick = () => {
     setAffection((state: number) => (state + 1) ^ state);
@@ -50,7 +52,9 @@ export const HomePageComponent: FC<homePageProps> = ({}) => {
     const color = getRandomColor();
     setAffectionColor(color);
     if (affection === -1) {
-      setImgUrl('src/img/cat-stop.gif');
+      setImgUrl(
+        'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgifdb.com%2Fimages%2Fhigh%2Fstop-it-now-cat-eonih5px39zhfmmi.gif&f=1&nofb=1&ipt=f02f95366aeee86835b9d3cf70e94ad1f968a81ca4797ca156bf2620a4c50ecf&ipo=images'
+      );
     } else {
       setImgUrl(catsData[returnRandomNumber(30)].url);
     }
