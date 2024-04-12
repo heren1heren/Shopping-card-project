@@ -40,15 +40,12 @@ export const HomePageComponent: FC<homePageProps> = ({}) => {
     setAffectionColor,
     setHeaderBackgroundColor,
   ] = useOutletContext();
-  console.log(isLoading);
-  console.log(catsData);
-  // ! lifting fetched data up
 
   const [imgUrl, setImgUrl] = useState('src/img/tenor.gif');
 
   const handleClick = () => {
     setAffection((state: number) => (state + 1) ^ state);
-    // if affection number is Nan || infinity || -1 -> setImgUrl(stop-cat.url)
+
     const color = getRandomColor();
     setAffectionColor(`#${color}`);
     if (affection === -1) {
@@ -56,17 +53,8 @@ export const HomePageComponent: FC<homePageProps> = ({}) => {
     } else {
       setImgUrl(catsData[Math.round(Math.random() * 29)].url);
     }
-
-    // setHeaderBackgroundColor(`#${invertHex(color)}`);
   };
 
-  if (isLoading)
-    return (
-      <div>
-        {' '}
-        <img src="src/img/tenor.gif" alt="" />
-      </div>
-    );
   return (
     <HomePageSection>
       <ImgPlaceholder src={imgUrl} alt="cat-image" />

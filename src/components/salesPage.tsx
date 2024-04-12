@@ -54,6 +54,17 @@ export const SalesComponent: FC<SalesComponentProps> = () => {
     setAffectionColor,
     setHeaderBackgroundColor,
   ] = useOutletContext();
+
+  const handleIncrease = () => {
+    console.log('click');
+  };
+  const handleDecrease = () => {
+    console.log('click');
+  };
+  const handleAdd = () => {
+    console.log('click');
+  };
+
   return (
     <SalesPage>
       <div> Use your affection points to purchase cats!!!!</div>
@@ -64,10 +75,10 @@ export const SalesComponent: FC<SalesComponentProps> = () => {
           <p>{catsData[0].prize} Affection point.</p>
           <p>{catsData[0].name}</p>
           <CountDisplayer>
-            <DecreaseBtn>-</DecreaseBtn>
+            <DecreaseBtn onClick={handleIncrease}>-</DecreaseBtn>
             <span>{catsData[0].count}</span>
-            <IncreaseBtn onClick={}>+</IncreaseBtn>
-            <AddBtn onClick={}>Add to cart </AddBtn>
+            <IncreaseBtn onClick={handleIncrease}>+</IncreaseBtn>
+            <AddBtn onClick={handleAdd}>Add to cart </AddBtn>
           </CountDisplayer>
         </Item>
       </ItemsContainer>

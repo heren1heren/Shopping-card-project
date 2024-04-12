@@ -1,9 +1,10 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, Suspense, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import './App.scss';
 import HeaderComponent from './components/headerComponent';
 import FooterComponent from './components/footerComponent';
 import { Outlet } from 'react-router-dom';
+import { DisplayPage } from '../test';
 type AppProps = {};
 const Body = styled.div`
   font-size: 20px;
@@ -27,7 +28,7 @@ export const App: FC<AppProps> = () => {
   const [affection, setAffection] = useState(0);
   const [affectionColor, setAffectionColor] = useState('black');
   const [headerBackgroundColor, setHeaderBackgroundColor] = useState('white'); // delete this latter
-  const [cardData, setCardData] = useState([]);
+  const [cartData, setCartData] = useState([]);
   // isFetchedRef lose reference after switching between routes
   useEffect(() => {
     if (!isFetchedRef.current) {
@@ -59,7 +60,7 @@ export const App: FC<AppProps> = () => {
       isFetchedRef.current = true;
       fetching();
     }
-  }, [catsData]);
+  });
 
   return (
     <Body>
@@ -70,21 +71,28 @@ export const App: FC<AppProps> = () => {
         headerBackgroundColor={headerBackgroundColor}
         itemCount={itemCount}
       />
-      {/** how to render default main section */}
 
-      <Outlet
-        context={[
-          catsData,
-          setCatsData,
-          isLoading,
-          setIsLoading,
-          affection,
-          setAffection,
-          affectionColor,
-          setAffectionColor,
-          setHeaderBackgroundColor,
-        ]}
-      />
+      {isLoading ? (
+        <div>
+          {' '}
+          <img src="src/img/cat-what.gif" alt="..." width="50%" height="70%" />
+        </div>
+      ) : (
+        <Outlet
+          context={[
+            catsData,
+            setCatsData,
+            isLoading,
+            setIsLoading,
+            affection,
+            setAffection,
+            affectionColor,
+            setAffectionColor,
+            setHeaderBackgroundColor,
+          ]}
+        />
+      )}
+
       <FooterComponent className="footer" />
     </Body>
   );
