@@ -109,8 +109,11 @@ export const SalesComponent: FC<SalesComponentProps> = () => {
       <div> Use your affection points to purchase cats!!!!</div>
 
       <ItemsContainer className="item-container">
-        <Item key="src/img/tenor.gif">
-          <img src="src/img/tenor.gif" alt="cat-image" />
+        <Item key="https://media.tenor.com/5BYK-WS0__gAAAAM/cool-fun.gif">
+          <img
+            src="https://media.tenor.com/5BYK-WS0__gAAAAM/cool-fun.gif"
+            alt="cat-image"
+          />
           <p> -1 Affection point.</p>
           <p> Cat God</p>
           <CountDisplayer>

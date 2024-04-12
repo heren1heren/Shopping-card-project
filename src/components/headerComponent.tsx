@@ -55,7 +55,11 @@ export const HeaderComponent: FC<HeaderComponentProps> = ({
     >
       {' '}
       <Title>
-        <CatImg src="src/img/icons8-cat-64(1).png" alt="cat-image" /> CatKingDom
+        <CatImg
+          src="https://img.icons8.com/?size=160&id=121371&format=png"
+          alt="cat-image"
+        />{' '}
+        CatKingDom
       </Title>
       {/**
        *
@@ -71,7 +75,6 @@ export const HeaderComponent: FC<HeaderComponentProps> = ({
         <StyledLink to="/homePage">Home Page</StyledLink>
         <StyledLink to="/shop">Shop</StyledLink>
         <StyledLink to="/cart">
-          <Img src="src/img/icons8-cart-50.png" alt="shoppingCartIcon" />
           Cart:
           {itemCount}
         </StyledLink>
