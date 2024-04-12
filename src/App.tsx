@@ -1,10 +1,12 @@
-import { FC, Suspense, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import './App.scss';
 import HeaderComponent from './components/headerComponent';
 import FooterComponent from './components/footerComponent';
 import { Outlet } from 'react-router-dom';
-import { DisplayPage } from '../test';
+
+import { getRandomPrize } from './utils';
+//todo: add type for appProps
 type AppProps = {};
 const Body = styled.div`
   font-size: 20px;
@@ -16,31 +18,23 @@ const Body = styled.div`
 `;
 export const App: FC<AppProps> = () => {
   /**
-   * lifting data from outlet and fetching here
-   * passing data down to homepage, salepage and check cart.
    */
-  // passing itemCount to homepageComponent
-  // passing setItemCount to outlet
+
+  const isFetchedRef = useRef(false); // don't delete this
   const [catsData, setCatsData] = useState([]);
   const [purchaseData, setPurchaseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const isFetchedRef = useRef(false);
   const [affection, setAffection] = useState(0);
   const [affectionColor, setAffectionColor] = useState('black');
   const [headerBackgroundColor, setHeaderBackgroundColor] = useState('white'); // delete this latter
-  const [cartData, setCartData] = useState([]);
-  // isFetchedRef lose reference after switching between routes
-  const itemCount = purchaseData.reduce(
-    (accumulator: number, current: object) => {
-      const value = 1; // depend on type of current data
-      return accumulator + value;
-    },
-    0
-  );
+
+  const itemCount = purchaseData.reduce((accumulator: number) => {
+    const value = 1; // depend on type of current data
+    return accumulator + value;
+  }, 0);
 
   useEffect(() => {
     if (!isFetchedRef.current) {
-      // everytime I comeback from another route the useEffect is triggered. I only want it to fetch once time only after open the page
       const fetching = async () => {
         let data = [];
         try {
@@ -53,13 +47,13 @@ export const App: FC<AppProps> = () => {
           console.log(error);
         } finally {
           setIsLoading(false);
+          //todo: add type for item
           const filterData = data.map((item: object) => {
-            // add count and prize:
             return {
               url: item.url,
               count: 1,
               price: getRandomPrize(),
-              name: item.breeds[0].name,
+              name: item.breeds[0].name || 'noname',
             };
           });
           setCatsData(filterData);
@@ -73,7 +67,6 @@ export const App: FC<AppProps> = () => {
   return (
     <Body>
       <HeaderComponent
-        className="header"
         affection={affection}
         affectionColor={affectionColor}
         headerBackgroundColor={headerBackgroundColor}
@@ -82,7 +75,6 @@ export const App: FC<AppProps> = () => {
 
       {isLoading ? (
         <div>
-          {' '}
           <img src="src/img/cat-what.gif" alt="..." width="50%" height="70%" />
         </div>
       ) : (
@@ -103,11 +95,7 @@ export const App: FC<AppProps> = () => {
         />
       )}
 
-      <FooterComponent className="footer" />
+      <FooterComponent />
     </Body>
   );
 };
-
-function getRandomPrize() {
-  return (Math.random() * 1000).toFixed(2);
-}

@@ -1,7 +1,12 @@
-import { FC } from 'react';
+/**
+ * todo:
+ *
+
+ */
+
 import styled from 'styled-components';
 import { useOutletContext } from 'react-router-dom';
-import { element } from 'prop-types';
+
 const SalesPage = styled.div`
   flex: 1;
   background-color: #f5deb3;
@@ -23,10 +28,7 @@ const AddBtn = styled.button`
   border-radius: 0.2em;
   border: solid orange 1px;
 `;
-const PurchaseBtn = styled.button`
-  border-radius: 0.2em;
-  border: solid orange 1px;
-`;
+
 const IncreaseBtn = styled.button``;
 const DecreaseBtn = styled.button``;
 const CountDisplayer = styled.div`
@@ -39,29 +41,14 @@ const Img = styled.img`
   max-height: 75%;
   max-width: 75%;
 `;
+// todo: add type
 type SalesComponentProps = {};
 export const SalesComponent: FC<SalesComponentProps> = () => {
-  const [
-    purchaseData,
-    setPurchaseData,
-    catsData,
-    setCatsData,
-    isLoading,
-    setIsLoading,
-    affection,
-    setAffection,
-    affectionColor,
-    setAffectionColor,
-    setHeaderBackgroundColor,
-  ] = useOutletContext();
+  // todo: add type
+  const [purchaseData, setPurchaseData, catsData, setCatsData] =
+    useOutletContext();
 
-  /** What to do
-   *  add events for increase and decrease data
-   */
-
-  // what if there is a million item? the million items get change just to increase one cat count?
-  const handleIncrease = (e) => {
-    console.log(e.target.id);
+  const handleIncrease = (e: React.ChangeEvent<HTMLElement>) => {
     const clone = [];
     for (let i = 0; i < catsData.length; i++) {
       const element = catsData[i];
@@ -72,23 +59,49 @@ export const SalesComponent: FC<SalesComponentProps> = () => {
         clone.push(element);
       }
     }
-
     setCatsData(clone);
-
-    // set catsData again here
-    // set purChaseData here or only change purchaseData after switch pages
   };
-  console.log(catsData);
 
-  const handleDecrease = () => {
-    // set catsData again here
-    // set purChaseData here
+  const handleDecrease = (e: React.ChangeEvent<HTMLElement>) => {
+    const clone = [];
+    let isChange = false;
+    for (let i = 0; i < catsData.length; i++) {
+      const element = catsData[i];
+      if (element.url === e.target.id) {
+        if (element.count < 1) {
+          isChange = true;
+          return;
+        }
+        element.count--;
+        clone.push(element);
+      } else {
+        clone.push(element);
+      }
+    }
+    if (!isChange) setCatsData(clone);
   };
-  const handleAdd = (e) => {
-    const filterArray = catsData.filter((item) => {
+  const handleAdd = (e: React.ChangeEvent<HTMLButtonElement>) => {
+    // todo: add type here
+    const filterArray = catsData.filter((item: object) => {
       return item.url === e.target.id ? item : null;
     });
-    setPurchaseData([...purchaseData, ...filterArray]);
+    if (filterArray[0].count <= 0) return;
+    const [item] = filterArray;
+    if (contains(item, purchaseData)) {
+      const clone: object[] = [];
+      purchaseData.forEach((element: object) => {
+        if (element === item) {
+          // todo: add type here
+          element.count++;
+          clone.push(element);
+        } else {
+          clone.push(element);
+        }
+      });
+      setPurchaseData(clone);
+      return;
+    }
+    setPurchaseData([...purchaseData, item]);
   };
 
   return (
@@ -96,7 +109,7 @@ export const SalesComponent: FC<SalesComponentProps> = () => {
       <div> Use your affection points to purchase cats!!!!</div>
 
       <ItemsContainer className="item-container">
-        <Item>
+        <Item key="src/img/tenor.gif">
           <img src="src/img/tenor.gif" alt="cat-image" />
           <p> -1 Affection point.</p>
           <p> Cat God</p>
@@ -118,7 +131,9 @@ export const SalesComponent: FC<SalesComponentProps> = () => {
             </AddBtn>
           </CountDisplayer>
         </Item>
-        {catsData.map((item) => {
+
+        {catsData.map((item: object) => {
+          // todo: add type here
           return (
             <Item key={item.prize}>
               <Img src={item.url} alt="cat-image" />

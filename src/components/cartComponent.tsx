@@ -1,3 +1,4 @@
+import { warn } from 'console';
 import { FC } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import styled from 'styled-components';
@@ -29,6 +30,10 @@ const ItemContainer = styled.div`
 `;
 const Item = styled.div`
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
 `;
 const CheckOutSection = styled.div`
   border-left: 2px solid black;
@@ -40,6 +45,7 @@ const CheckOutSection = styled.div`
 `;
 const Img = styled.img`
   max-height: 20vh;
+  border-radius: 0.2em;
 `;
 const TaxDiv = styled.div`
   padding-bottom: 10px;
@@ -50,40 +56,40 @@ const PurchaseBtn = styled.button`
   border: solid black 1px;
   padding: 10px;
 `;
-const TotalDiv = styled.div``;
-const AfterDiv = styled.div``;
+console.trace('hello');
 export const CartComponent: FC<CartProps> = ({}) => {
   /**
    */
-  const [
-    purchaseData,
-    setPurchaseData,
-    catsData,
-    setCatsData,
-    isLoading,
-    setIsLoading,
-    affection,
-    setAffection,
-    affectionColor,
-    setAffectionColor,
-    setHeaderBackgroundColor,
-  ] = useOutletContext();
-  const handlePurchase = () => {
-    alert('cat will love you. Thanks.');
+  const [purchaseData, setPurchaseData, affection] = useOutletContext();
+  const handleDelete = (e) => {
+    const clone = [];
+    for (let i = 0; i < purchaseData.length; i++) {
+      const element = purchaseData[i];
+      if (element.url === e.target.id) continue;
+      clone.push(element);
+    }
+    setPurchaseData(clone);
   };
+  const handlePurchase = () => {
+    if (affection < totalCost) {
+      alert('you are poor but cats do not discriminate: Meoww~$$$ ');
+    } else {
+      alert('cat will love you. Thanks.');
+    }
+  };
+  //todo: add type here
   const totalCost = purchaseData.reduce(
     (accumulator: number, current: object) => {
       const cost = current.price * current.count;
 
-      //comback later
       return accumulator + cost;
     },
     0
   );
   const tax = Math.random();
   const afterCost = tax * totalCost + totalCost;
-  console.log(purchaseData);
-  const renderList = (list: Array) => {
+  //todo: add type here
+  const renderList = (list: object[]) => {
     return list.map((item: object) => {
       return (
         <Item key={item.url}>
@@ -93,6 +99,9 @@ export const CartComponent: FC<CartProps> = ({}) => {
             <p>Price:{item.price}</p>
             <p>Count: {item.count}</p>
           </div>
+          <button id={item.url} onClick={handleDelete}>
+            Delete
+          </button>
         </Item>
       );
     });

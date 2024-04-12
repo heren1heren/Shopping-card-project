@@ -1,14 +1,11 @@
 Readme when ya get lost:
 As long as the check list is not finished -> don't quit project:
 
-main plans:
+- main plans:
 
-- add item to cart funcion : display on header, function on saleproducts' buttton on click ( don't let user add twice); set functions: setCartData. display: cartData.counts
-
-- increasing and decreasing function products count by ...?
-  Extra plans:
-  try to handle loading phase: smarter(using suspense tag)
-  rendering products by map method ( rendering randomly but it will not reset unless reload the app again)
+* add types and export types
+* add css snippets
+* submit and continue refactoring code.
 
 Error:
 Type '{ className: string; affection: number; }' is not assignable to type 'IntrinsicAttributes & HeaderComponentProps'.
@@ -32,6 +29,7 @@ setHeaderBackgroundColor,
 />
 
 console.log(item.breeds[0].name);
+create a new type file
 learn how to handle typee of api inputs
 
 try to handle loading phase: smarter(using suspense tag)

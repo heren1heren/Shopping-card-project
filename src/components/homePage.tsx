@@ -1,8 +1,7 @@
-import { randomBytes } from 'crypto';
-import { object } from 'prop-types';
-import { useEffect, useState, FC, useRef } from 'react';
+import { useState, FC } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import styled from 'styled-components';
+import { getRandomColor, returnRandomNumber } from '../utils';
 
 const HomePageSection = styled.div`
   background-color: wheat;
@@ -42,10 +41,6 @@ export const HomePageComponent: FC<homePageProps> = ({}) => {
     setAffectionColor,
     setHeaderBackgroundColor,
   ] = useOutletContext();
-  const count = purchaseData.reduce((accumulator: number, current: object) => {
-    const value = 1; // depend on type of current data
-    return accumulator + value;
-  }, 0);
 
   const [imgUrl, setImgUrl] = useState('src/img/tenor.gif');
 
@@ -53,11 +48,11 @@ export const HomePageComponent: FC<homePageProps> = ({}) => {
     setAffection((state: number) => (state + 1) ^ state);
 
     const color = getRandomColor();
-    setAffectionColor(`#${color}`);
+    setAffectionColor(color);
     if (affection === -1) {
       setImgUrl('src/img/cat-stop.gif');
     } else {
-      setImgUrl(catsData[Math.round(Math.random() * 29)].url);
+      setImgUrl(catsData[returnRandomNumber(30)].url);
     }
   };
 
@@ -66,27 +61,12 @@ export const HomePageComponent: FC<homePageProps> = ({}) => {
       <ImgPlaceholder src={imgUrl} alt="cat-image" />
       <div className="wrapper">
         <Slogan>
-          {' '}
           Cool things like cats are never free. Earn Them yourSelf. 👇🏿👇🏿👇🏿👇🏿👇🏿
-          {/** make it like a quote latter quoter: cat's addict  */}
         </Slogan>
         <IncreaseButton onClick={handleClick}> Meoww~</IncreaseButton>
       </div>
     </HomePageSection>
   );
 };
-function getRandomColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-function invertHex(hex) {
-  return (Number(`0x${hex}`) ^ 0xffffff)
-    .toString(16)
-    .toUpperCase()
-    .padStart(6, '0');
-}
+
 export default HomePageComponent;

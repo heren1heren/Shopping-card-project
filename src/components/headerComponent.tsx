@@ -9,6 +9,9 @@ const Section = styled.div<{ $backgroundColor?: string }>`
   justify-content: space-between;
   align-items: center;
 `;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
 const LinkWrapper = styled.div`
   text-decoration: none;
   display: flex;
@@ -30,7 +33,7 @@ const CatImg = styled.img`
 `;
 
 const DisplayAffectionDiv = styled.div<{ $color?: string }>`
-  color: ${(props: any) => props.color || 'black'};
+  color: ${(props) => props.color || 'black'};
 `;
 
 type HeaderComponentProps = {
@@ -65,14 +68,13 @@ export const HeaderComponent: FC<HeaderComponentProps> = ({
         Affection : {`${affection}`}
       </DisplayAffectionDiv>
       <LinkWrapper>
-        <Link to="/homePage">Home Page</Link>
-        <Link to="/shop">Shop</Link>
-        <Link to="/cart">
-          {' '}
+        <StyledLink to="/homePage">Home Page</StyledLink>
+        <StyledLink to="/shop">Shop</StyledLink>
+        <StyledLink to="/cart">
           <Img src="src/img/icons8-cart-50.png" alt="shoppingCartIcon" />
           Cart:
           {itemCount}
-        </Link>
+        </StyledLink>
       </LinkWrapper>
     </Section>
   );
