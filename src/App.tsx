@@ -76,7 +76,7 @@ export const App: FC<AppProps> = () => {
       {isLoading ? (
         <div>
           <img
-            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgifdb.com%2Fimages%2Fhigh%2Fstop-it-now-cat-eonih5px39zhfmmi.gif&f=1&nofb=1&ipt=f02f95366aeee86835b9d3cf70e94ad1f968a81ca4797ca156bf2620a4c50ecf&ipo=images"
+            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2F8f7a28e62f8242b264c8a39ba8bea261%2Ftenor.gif%3Fitemid%3D15922897&f=1&nofb=1&ipt=38a131cfda909ea0457a289cf15d67b8b78def2da7506e80008b59aa0d1d7771&ipo=images"
             alt="..."
             height="500px"
           />
