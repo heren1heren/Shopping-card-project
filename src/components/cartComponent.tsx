@@ -1,8 +1,9 @@
-import { warn } from 'console';
 import { FC } from 'react';
-import { useOutletContext } from 'react-router-dom';
+
 import styled from 'styled-components';
-type CartProps = {};
+import { useOutletContextWithType } from '../hooks';
+import { filterData } from '../typeDeclaration';
+type CartProps = unknown;
 const CartSection = styled.div`
   flex: 1;
   background-color: #f5deb3;
@@ -56,13 +57,17 @@ const PurchaseBtn = styled.button`
   border: solid black 1px;
   padding: 10px;
 `;
-console.trace('hello');
-export const CartComponent: FC<CartProps> = ({}) => {
+
+export const CartComponent: FC<CartProps> = () => {
   /**
    */
-  const [purchaseData, setPurchaseData, affection] = useOutletContext();
-  const handleDelete = (e) => {
-    const clone = [];
+  const { purchaseData, setPurchaseData, affection } =
+    useOutletContextWithType();
+
+  const handleDelete = (
+    e: React.MouseEvent<HTMLButtonElement> & { target: HTMLButtonElement }
+  ) => {
+    const clone: filterData[] = [];
     for (let i = 0; i < purchaseData.length; i++) {
       const element = purchaseData[i];
       if (element.url === e.target.id) continue;
@@ -79,7 +84,7 @@ export const CartComponent: FC<CartProps> = ({}) => {
   };
   //todo: add type here
   const totalCost = purchaseData.reduce(
-    (accumulator: number, current: object) => {
+    (accumulator: number, current: filterData) => {
       const cost = current.price * current.count;
 
       return accumulator + cost;
@@ -88,9 +93,8 @@ export const CartComponent: FC<CartProps> = ({}) => {
   );
   const tax = Math.random();
   const afterCost = tax * totalCost + totalCost;
-  //todo: add type here
-  const renderList = (list: object[]) => {
-    return list.map((item: object) => {
+  const renderList = (list: filterData[]) => {
+    return list.map((item: filterData) => {
       return (
         <Item key={item.url}>
           <Img src={item.url} alt="cat-image" />

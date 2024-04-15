@@ -1,5 +1,5 @@
 export function getRandomPrize() {
-  return (Math.random() * 1000).toFixed(2);
+  return +(Math.random() * 1000).toFixed(2);
 }
 export function getRandomColor() {
   const letters = '0123456789ABCDEF';

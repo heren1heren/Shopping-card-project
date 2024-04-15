@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ErrorPage = styled.div``;
-type ErrorPageProps = {};
-export const ErrorPageComponent: FC<ErrorPageProps> = ({}) => {
+type ErrorPageProps = unknown;
+export const ErrorPageComponent: FC<ErrorPageProps> = () => {
   return (
     <ErrorPage>
       {' '}

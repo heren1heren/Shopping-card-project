@@ -1,7 +1,8 @@
 import { useState, FC } from 'react';
-import { useOutletContext } from 'react-router-dom';
+
 import styled from 'styled-components';
 import { getRandomColor, returnRandomNumber } from '../utils';
+import { useOutletContextWithType } from '../hooks';
 
 const HomePageSection = styled.div`
   background-color: wheat;
@@ -25,22 +26,10 @@ const IncreaseButton = styled.button`
   cursor: crosshair;
 `;
 
-type homePageProps = {};
-export const HomePageComponent: FC<homePageProps> = ({}) => {
-  // the context cannot recognize set function ask google later.
-  const [
-    purchaseData,
-    setPurchaseData,
-    catsData,
-    setCatsData,
-    isLoading,
-    setIsLoading,
-    affection,
-    setAffection,
-    affectionColor,
-    setAffectionColor,
-    setHeaderBackgroundColor,
-  ] = useOutletContext();
+type homePageProps = unknown;
+export const HomePageComponent: FC<homePageProps> = () => {
+  const { catsData, affection, setAffection, setAffectionColor } =
+    useOutletContextWithType();
 
   const [imgUrl, setImgUrl] = useState(
     'https://media.tenor.com/5BYK-WS0__gAAAAM/cool-fun.gif'

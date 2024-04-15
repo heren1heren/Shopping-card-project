@@ -5,7 +5,10 @@
  */
 
 import styled from 'styled-components';
-import { useOutletContext } from 'react-router-dom';
+import { contains } from '../utils';
+import { filterData } from '../typeDeclaration';
+import { FC } from 'react';
+import { useOutletContextWithType } from '../hooks';
 
 const SalesPage = styled.div`
   flex: 1;
@@ -41,18 +44,21 @@ const Img = styled.img`
   max-height: 75%;
   max-width: 75%;
 `;
-// todo: add type
-type SalesComponentProps = {};
+type SalesComponentProps = unknown;
 export const SalesComponent: FC<SalesComponentProps> = () => {
-  // todo: add type
-  const [purchaseData, setPurchaseData, catsData, setCatsData] =
-    useOutletContext();
+  // todo: add types by using satisfy keyword.
 
-  const handleIncrease = (e: React.ChangeEvent<HTMLElement>) => {
+  const { purchaseData, setPurchaseData, catsData, setCatsData } =
+    useOutletContextWithType();
+
+  const handleIncrease: React.MouseEventHandler<HTMLButtonElement> = (
+    e: React.MouseEvent<HTMLButtonElement> & { target: HTMLButtonElement }
+  ) => {
+    const { target } = e;
     const clone = [];
     for (let i = 0; i < catsData.length; i++) {
       const element = catsData[i];
-      if (element.url === e.target.id) {
+      if (element.url === target.id) {
         element.count++;
         clone.push(element);
       } else {
@@ -62,12 +68,16 @@ export const SalesComponent: FC<SalesComponentProps> = () => {
     setCatsData(clone);
   };
 
-  const handleDecrease = (e: React.ChangeEvent<HTMLElement>) => {
-    const clone = [];
+  const handleDecrease: React.MouseEventHandler<HTMLButtonElement> = (
+    e: React.MouseEvent<HTMLButtonElement> & { target: HTMLButtonElement }
+  ) => {
+    const { target } = e;
+
+    const clone: filterData[] = [];
     let isChange = false;
     for (let i = 0; i < catsData.length; i++) {
       const element = catsData[i];
-      if (element.url === e.target.id) {
+      if (element.url === target.id) {
         if (element.count < 1) {
           isChange = true;
           return;
@@ -80,18 +90,19 @@ export const SalesComponent: FC<SalesComponentProps> = () => {
     }
     if (!isChange) setCatsData(clone);
   };
-  const handleAdd = (e: React.ChangeEvent<HTMLButtonElement>) => {
-    // todo: add type here
-    const filterArray = catsData.filter((item: object) => {
-      return item.url === e.target.id ? item : null;
+  const handleAdd: React.MouseEventHandler<HTMLButtonElement> = (
+    e: React.MouseEvent<HTMLButtonElement> & { target: HTMLButtonElement }
+  ) => {
+    const { target } = e;
+    const filterArray = catsData.filter((item: filterData) => {
+      return item.url === target.id ? item : null;
     });
     if (filterArray[0].count <= 0) return;
     const [item] = filterArray;
     if (contains(item, purchaseData)) {
-      const clone: object[] = [];
-      purchaseData.forEach((element: object) => {
+      const clone: filterData[] = [];
+      purchaseData.forEach((element: filterData) => {
         if (element === item) {
-          // todo: add type here
           element.count++;
           clone.push(element);
         } else {
@@ -135,10 +146,10 @@ export const SalesComponent: FC<SalesComponentProps> = () => {
           </CountDisplayer>
         </Item>
 
-        {catsData.map((item: object) => {
+        {catsData.map((item: filterData) => {
           // todo: add type here
           return (
-            <Item key={item.prize}>
+            <Item key={item.price}>
               <Img src={item.url} alt="cat-image" />
               <p>{item.price} Affection point.</p>
               <p>{item.name}</p>
